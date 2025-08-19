@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, jsonify, render_template
 from app import app, db
 from app.models import User
 from app.services import hash_password, check_password
@@ -51,3 +51,11 @@ def protected():
     current_user_id = int(get_jwt_identity())
     user = User.query.get(current_user_id)
     return jsonify(logged_in_as=user.username), 200
+
+@app.route('/', methods=['GET'])
+def show_register_page():
+    return render_template('register.html')
+
+@app.route('/login', methods=['GET'])
+def show_login_page():
+    return render_template('login.html')
