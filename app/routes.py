@@ -40,7 +40,7 @@ def login():
     user = User.query.filter_by(username=username).first()
 
     if user and check_password(user.password, password):
-        access_token = create_access_token(identity=user.id)
+        access_token = create_access_token(identity=str(user.id))
         return jsonify(access_token=access_token)
 
     return jsonify({"message": "Nome de usuário ou senha inválidos"}), 401
@@ -48,5 +48,6 @@ def login():
 @app.route('/protected',  methods=['GET'])
 @jwt_required()
 def protected():
-    current_user_id = get_jwt_identity()
-    return jsonify(logged_in_as=current_user_id), 200
+    current_user_id = int(get_jwt_identity())
+    user = User.query.get(current_user_id)
+    return jsonify(logged_in_as=user.username), 200
