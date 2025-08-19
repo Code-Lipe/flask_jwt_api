@@ -48,9 +48,12 @@ def login():
 @app.route('/protected',  methods=['GET'])
 @jwt_required()
 def protected():
-    current_user_id = int(get_jwt_identity())
-    user = User.query.get(current_user_id)
-    return jsonify(logged_in_as=user.username), 200
+    # Caso você queira testar a função nos 'bastidores' por meio do Thunder Client por exemplo, utilize as linhas comentadas.
+    #current_user_id = int(get_jwt_identity())
+    #user = User.query.get(current_user_id)
+    #return jsonify(logged_in_as=user.username), 200
+
+    return render_template('protected.html')
 
 @app.route('/', methods=['GET'])
 def show_register_page():

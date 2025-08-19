@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Protegida</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .container { max-width: 800px; margin-top: 50px; }
+        .card { border-radius: 1rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card shadow p-4">
+            <h2 class="text-center mb-4">Bem-vindo à Página Protegida!</h2>
+            <p class="lead text-center">Apenas usuários logados podem ver esta página.</p>
+            <hr>
+
+            <h3 class="mb-3">Sobre o Projeto</h3>
+            <p>Este é um projeto de portfólio que demonstra a criação de uma API de autenticação segura usando Python e Flask.</p>
+            <p>O foco principal é a integração entre o frontend e o backend, utilizando tecnologias como <strong>Flask, Bcrypt, Flask-JWT-Extended, SQLAlchemy e JavaScript (Fetch API)</strong> para o frontend.</p>
+
+            <h4 class="mt-4">O Processo por trás da página</h4>
+            <p>
+                Para você chegar aqui, um processo seguro foi realizado no backend. Veja como funciona:
+            </p>
+            <ol>
+                <li>Você inseriu suas credenciais na página de login.</li>
+                <li>O JavaScript enviou uma requisição <strong>POST</strong> para a nossa API na rota <code>/login</code>.</li>
+                <li>O backend verificou sua senha (criptografada) no banco de dados.</li>
+                <li>Se a senha estava correta, a API gerou um <strong>JWT</strong> (o seu "crachá digital") e o enviou de volta.</li>
+                <li>O JavaScript salvou esse token e o utilizou para fazer uma nova requisição <strong>GET</strong> para esta página, na rota <code>/protected</code>.</li>
+                <li>O <strong>Flask-JWT-Extended</strong> verificou o token, validou que ele era autêntico e permitiu o seu acesso à página.</li>
+            </ol>
+
+            <a href="{{ url_for('show_login_page') }}" id="logout-btn" class="btn btn-danger mt-4 w-100">Sair</a>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/protected.js') }}"></script>
+</body>
+</html>
