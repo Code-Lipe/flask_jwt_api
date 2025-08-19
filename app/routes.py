@@ -3,7 +3,7 @@ from app import app, db
 from app.models import User
 from app.services import hash_password
 
-@app.route('/registrar', methods=['POST'])
+@app.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
     username = data.get('username')
@@ -23,7 +23,7 @@ def register():
 
     try:
         db.session.add(new_user)
-        db.session.commit
-        return jsonify({'message': 'Usuário registrado com sucesso'}), 201
+        db.session.commit()
+        return jsonify({'message': 'Usuário registrado com sucesso!'}), 201
     except:
         return jsonify({'message': 'Erro ao registrar usuário. Verifique se o nome de usuário ou e-mail já existem.'}), 409
