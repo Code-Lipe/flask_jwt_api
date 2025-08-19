@@ -32,6 +32,8 @@ def register():
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
+    if not data:
+        return jsonify({"message": "Dados de login incompletos"}), 400
     username = data.get('username')
     password = data.get('password')
 
@@ -40,7 +42,7 @@ def login():
     if user and check_password(user.password, password):
         access_token = create_access_token(identity=user.id)
         return jsonify(access_token=access_token)
-    
+
     return jsonify({"message": "Nome de usuário ou senha inválidos"}), 401
 
 @app.route('/protected',  methods=['GET'])
