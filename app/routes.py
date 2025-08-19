@@ -38,7 +38,7 @@ def login():
     user = User.query.filter_by(username=username).first()
 
     if user and check_password(user.password, password):
-        access_token = create_access_token(identity=user.username)
+        access_token = create_access_token(identity=user.id)
         return jsonify(access_token=access_token)
     
     return jsonify({"message": "Nome de usuário ou senha inválidos"}), 401
