@@ -2,7 +2,7 @@ from flask import request, jsonify
 from app import app, db
 from app.models import User
 from app.services import hash_password, check_password
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -42,3 +42,9 @@ def login():
         return jsonify(access_token=access_token)
     
     return jsonify({"message": "Nome de usuário ou senha inválidos"}), 401
+
+@app.route('/protected',  methods=['GET'])
+@jwt_required()
+def protected():
+    current_user = get_jwt_identity()
+    return jsonify(logged_in_as=current_user), 200
